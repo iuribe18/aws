@@ -2,6 +2,8 @@
 Requirements
 1. Amazon EFS File systems
 2. C
+Output:
+File system ID: fs-0f16cd5e44f6ca215
 
 ## Authors
 - [@iuribe18](https://www.github.com/iuribe18)
@@ -40,4 +42,15 @@ Ubuntu 22.04
   cd efs-utils
   ./build-deb.sh
   sudo apt-get -y install ./build/amazon-efs-utils*deb
+```
+
+## Mount EFS
+```bash
+  # Create a Directory
+  mkdir /efsdemo 
+  # mount.nfs fylesystem_ID /path
+  sudo mount.efs fs-0f16cd5e44f6ca215 /efsdemo
+  # Check
+  df -h
+  ![df -h](https://github.com/iuribe18/aws/assets/78730753/b675d67b-909f-4496-9ba2-866444364d7e)
 ```
