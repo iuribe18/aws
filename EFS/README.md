@@ -20,3 +20,6 @@ Requirements
 4a. VPC
 4b. Mount Targets: (Az, Subnet, SecurityGroup)
 5. Security group (port 2049)
+
+## Screenshots
+![Customize](https://github.com/iuribe18/aws/assets/78730753/8952ad42-42c7-4d01-8231-9d5da9701d4d)
