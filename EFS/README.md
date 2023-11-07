@@ -23,3 +23,5 @@ Requirements
 
 ## Screenshots
 ![Customize](https://github.com/iuribe18/aws/assets/78730753/8952ad42-42c7-4d01-8231-9d5da9701d4d)
+![Options](https://github.com/iuribe18/aws/assets/78730753/5cecdf0c-0813-4467-826b-1d382d453d10)
+![Mount Targets](https://github.com/iuribe18/aws/assets/78730753/c740f193-bbc1-4c52-b9a3-2310f382f272)
