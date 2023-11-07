@@ -28,7 +28,16 @@ Requirements
 
 ## Installation
 Install Amazon efs-utils package
-
+Amazon Linux
 ```bash
   sudo yum -y install amazon-efs-utils
+```
+
+Ubuntu 22.04
+```bash
+  sudo apt-get update
+  sudo apt-get -y install git binutils
+  cd efs-utils
+  ./build-deb.sh
+  sudo apt-get -y install ./build/amazon-efs-utils*deb
 ```
