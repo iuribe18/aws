@@ -1,0 +1,16 @@
+Using terraform to setup AWS EventBridge Scheduler and a scheduled ECS Task
+https://medium.com/@igorkachmaryk/using-terraform-to-setup-aws-eventbridge-scheduler-and-a-scheduled-ecs-task-1208ae077360
+
+Deploying event driven ECS Tasks using AWS Evenbridge and Fargate
+https://mismo.team/deploying-event-driven-ecs-tasks-using-aws-evenbridge-and-fargate/
+
+Definitions
+Event: An event is a record of an action that has happened in the past. In this context it's represented as a Json object that contains data from the event and metadata about the event.
+For example, if someone saves a file to Amazon S3 an event is created containing the bucket, the file was saved to and the key or name of the file. It will also contain data about when it was saved, the size of the file and other metadata that helps developers to understand the event.
+Another example would be someone pushing an IOT button, the event will contain information like when the bottom was clicked, the type of click, single, double or long click and maybe the location of the bottom.
+Events can come from many different sources and can look very differente from each other. 
+
+Evenmt Bus: An event bus can ingest many different events from many different locations as the events enter the bus they remain on the bus for a configured period of time.
+These events can come from external SAS services like Salesforce or Zendesk. They can come from internal AWS services like Amazon S3 or AWS CloudWatch or they can come from custom applications that you are building.
+Amazon EventBridge allows you to set up rules. These rules are data patterns that match some or all of the events on a bus. EventBridge evaluates each event against each rule you create. If the rule doesn't apply the event is ignored by that rule.
+If the rule does apply then EventBridge will send a copy of that event to a configured target. Either way the event remains on the bus to be evaluated by other rules. Using a EventBridge data can be sent to any number of targets.

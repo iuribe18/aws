@@ -1,0 +1,2 @@
+Amazon ECS task networking options for the EC2 launch type
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html

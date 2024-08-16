@@ -1,0 +1,15 @@
+mi.com.co
+Servidor DNS 1: nameserver01.mi.com.co
+Servidor DNS 2: nameserver02.mi.com.co
+Servidor DNS 3: nameserver03.mi.com.co
+Servidor DNS 4: nameserver04.mi.com.co
+
+Test con DNS Checker
+https://dnschecker.org/#NS/chamin.co
+
+Test con dig
+dig chamin.co +trace
+dig chamin.co txt
+dig chamin.co cname
+dig chamin.co ns 
+dig chamin.co
