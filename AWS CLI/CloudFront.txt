@@ -1,0 +1,9 @@
+CloudFront
+$ aws cloudfront list-origin-access-controls
+$ aws cloudfront delete-origin-access-control --id E12F98NMG48ENE --if-match ETVPDKIKX0DER
+$ aws cloudfront delete-origin-access-control --id E8LRWOAIUDJUG --if-match ETVPDKIKX0DER
+$ aws cloudfront get-origin-access-control --id E12F98NMG48ENE
+
+Elastic Beanstalk
+$ aws elasticbeanstalk list-available-solution-stacks
+$ aws elasticbeanstalk list-available-solution-stacks --query "SolutionStacks" --output text | grep -i "java"

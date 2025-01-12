@@ -1,0 +1,4 @@
+# Creates an Lambda layer from a ZIP archive. Each time you call PublishLayerVersion with the same layer name, a new version is created.
+$ aws lambda publish-layer-version --layer-name $LAYER --zip-file fileb://$PACKAGE --description "Shared utilities layer for Nielsen and Express"
+$ aws lambda publish-layer-version --layer-name $LAYER --content S3Bucket=$BUCKET,S3Key=$FOLDER/$PACKAGE --description "Shared utilities layer for Nielsen and Express"
+aws lambda publish-layer-version --layer-name shared_layer-sandbox --content S3Bucket=ivanuribegonzalez,S3Key=layers/layer.zip --description "Shared utilities layer for Nielsen and Express AWSCLI" --profile uribe

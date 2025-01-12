@@ -1,0 +1,22 @@
+Amazon MemoryDB for Redis:
+Amazon MemoryDB for Redis es un servicio de base de datos en memoria, compatible con Redis, diseñado para ofrecer ultra-alto rendimiento con almacenamiento de datos duradero.
+
+Características principales:
+1. Diferencia con Redis estándar:
+* Redis se utiliza principalmente como caché con alguna capacidad de durabilidad.
+* MemoryDB es una base de datos completa, compatible con la API de Redis, pero enfocada en ser duradera.
+
+2. Rendimiento y escalabilidad:
+* Soporta más de 160 millones de solicitudes por segundo.
+* Escala desde decenas de gigabytes hasta cientos de terabytes de almacenamiento.
+
+3. Durabilidad y recuperación:
+* Almacena datos en memoria para velocidad ultra-rápida.
+* Ofrece durabilidad mediante un log de transacciones Multi-AZ, lo que asegura rápida recuperación y protección de datos.
+
+4. Casos de uso:
+* Aplicaciones web y móviles.
+* Juegos en línea.
+* Streaming de medios.
+* Ideal para arquitecturas basadas en microservicios.
+Conclusión: Amazon MemoryDB for Redis combina la velocidad de Redis en memoria con la durabilidad de una base de datos Multi-AZ, haciéndolo ideal para aplicaciones críticas que requieren alto rendimiento y recuperación confiable.

@@ -1,0 +1,36 @@
+SAM:
+1. En este paso, se utiliza el AWS SAM CLI para crear la aplicación y prepararla para la implementación. 
+Al compilar, el AWS SAM CLI crea un .aws-sam directorio y organiza allí las dependencias de las funciones, el código del proyecto y los archivos del proyecto.
+$ sam build
+# Output:
+Build Succeeded
+
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+2. Preparar el artefacto
+$ aws cloudformation package --s3-bucket ivanuribegonzalez --template .aws-sam/build/template.yaml --output-template-file sam/template.yaml
+# Output:
+Successfully packaged artifacts and wrote output template to file sam/template.yaml.
+Execute the following command to deploy the packaged template
+aws cloudformation deploy --template-file /home/osboxes/Documents/sam/sam/template.yaml --stack-name <YOUR STACK NAME>
+
+3. Implementar la aplicación en AWS
+aws cloudformation deploy --template-file sam/template.yaml --stack-name uribe --capabilities CAPABILITY_IAM
+
+4. Eliminar la aplicación de AWS
+$ sam delete
+
+# Using Profile
+aws cloudformation package --profile uribe --s3-bucket ivanuribegonzalez --template .aws-sam/build/template.yaml --output-template-file sam/template.yaml
+aws cloudformation deploy --profile uribe --template-file sam/template.yaml --stack-name disney --capabilities CAPABILITY_IAM
+
+# Without Profile
+aws cloudformation package --s3-bucket ivanuribegonzalez --template .aws-sam/build/template.yaml --output-template-file sam/template.yaml
+
+aws cloudformation deploy --template-file sam/template.yaml --stack-name uribe --capabilities CAPABILITY_IAM
+aws cloudformation deploy --template-file sam/template.yaml --stack-name lambdas --capabilities CAPABILITY_IAM
+
+# Delete Stack
+aws cloudformation delete-stack --stack-name lambdas
+aws cloudformation --profile uribe delete-stack --stack-name lambdas

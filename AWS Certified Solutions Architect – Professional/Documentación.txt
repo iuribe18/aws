@@ -1,0 +1,26 @@
+Documentos técnicos
+Explore los documentos técnicos de AWS relevantes para el examen a fin de conocer los servicios y las prácticas recomendadas de AWS.
+
+1. Prácticas recomendadas de seguridad para AWS Key Management Service
+AWS Key Management Service - https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
+
+2. Encryption of Data at Rest (Cifrado de datos en reposo)
+Encryption of Data at Rest - https://docs.aws.amazon.com/whitepapers/latest/efs-encrypted-file-systems/encryption-of-data-at-rest.html
+
+3. Alojamiento de aplicaciones web en la nube de AWS
+Web Application Hosting in the AWS Cloud - https://docs.aws.amazon.com/whitepapers/latest/web-application-hosting-best-practices/welcome.html
+
+4. Practicing Continuous Integration and Continuous Delivery on AWS (Práctica de la integración y entrega continuas en AWS)
+Practicing Continuous Integration and Continuous Delivery on AWS - https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/welcome.html
+
+5. Arquitectura de microservicios en AWS
+Simple microservices architecture on AWS - https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/simple-microservices-architecture-on-aws.html
+
+6. Marco de AWS Well-Architected
+AWS Well-Architected Framework - https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html
+
+7. Utilizar Amazon Web Services para la recuperación ante desastres (Using Amazon Web Services for Disaster Recovery)
+8. Documentos técnicos de arquitectura del Centro de arquitectura de AWS
+Documentos técnicos y guías de AWS - https://aws.amazon.com/es/whitepapers/?achp_navlib6&whitepapers-main.sort-by=item.additionalFields.sortDate&whitepapers-main.sort-order=desc&awsf.whitepapers-content-type=*all&awsf.whitepapers-global-methodology=*all&awsf.whitepapers-tech-category=*all&awsf.whitepapers-industries=*all&awsf.whitepapers-business-category=*all
+
+9. Información general sobre AWS Cloud Adoption Framework (AWS Cloud Adoption Framework)

@@ -1,0 +1,65 @@
+Amazon Aurora:
+Overview:
+* Proprietary Technology: Aurora is a cloud-native database from AWS, compatible with MySQL and PostgreSQL drivers, allowing seamless connection without modifying existing applications.
+* Performance: Offers 5x better performance than MySQL and 3x better performance than PostgreSQL on RDS, optimized for the cloud.
+
+Key Features:
+1. Storage:
+- Automatically expands from 10GB to 128TB.
+- No manual disk monitoring needed; scales as data grows.
+
+2. High Availability:
+- Maintains six copies of data across three Availability Zones (AZs).
+- Needs only four copies for writes and three for reads, ensuring resilience.
+- Self-healing storage with peer-to-peer replication to handle corruption.
+- Failover happens in under 30 seconds, faster than RDS Multi-AZ setups.
+
+3. Replication:
+- Supports up to 15 read replicas with sub-10ms replica lag.
+- Cross-region replication for disaster recovery and read scaling.
+
+Endpoints:
+* Writer Endpoint: Always points to the master instance for writes. Automatically updates during failovers.
+* Reader Endpoint: Connects clients to read replicas for load balancing. Handles scaling and simplifies management of replica connections.
+
+Management and Scaling:
+* Auto Scaling: Dynamically adjusts the number of read replicas to match demand.
+* Backup and Recovery:
+- Continuous backups with zero downtime.
+- Backtrack: Allows point-in-time recovery without relying on traditional backups.
+* Patching and Maintenance: Fully automated with no downtime.
+
+Architecture:
+* Shared storage design across multiple AZs with striping, self-healing, and auto-expansion.
+* Logical volume management for reliability and reduced risks.
+
+Cost and Efficiency:
+* 20% more expensive than RDS, but efficiency and scaling capabilities make it cost-effective at scale.
+
+Additional Features:
+* Advanced monitoring and compliance.
+* Push-button scaling and routine maintenance.
+Conclusion: Aurora is designed for high performance, availability, and scalability. It simplifies database management with features like auto-scaling, automatic failover, and innovative recovery mechanisms, making it a robust choice for modern applications.
+
+Amazon RDS Proxy:
+Amazon RDS Proxy es un servicio totalmente administrado diseñado para optimizar las conexiones a bases de datos RDS dentro de una VPC. Actúa como intermediario entre las aplicaciones y la base de datos, ofreciendo varias ventajas:
+
+1. Optimización de Conexiones:
+* Agrupa y comparte conexiones a la base de datos, lo que reduce la cantidad de conexiones directas desde las aplicaciones hacia la base de datos RDS.
+* Esto mejora la eficiencia de la base de datos al disminuir la carga en recursos como CPU y RAM, y reduce el riesgo de timeouts.
+
+2. Reducción del Tiempo de Failover:
+* En escenarios de failover (por ejemplo, cuando se cambia de una instancia primaria a una secundaria), el RDS Proxy puede reducir el tiempo de failover hasta en un 66%. Esto aplica tanto a RDS como a Aurora.
+
+3. Compatibilidad y Facilidad de Uso:
+* Compatible con MySQL, PostgreSQL, MariaDB, Microsoft SQL Server y Aurora.
+* No requiere cambios en el código de las aplicaciones; simplemente se conecta al RDS Proxy en lugar de directamente a la base de datos.
+
+4. Seguridad Mejorada:
+* Permite la autenticación IAM para las bases de datos, reforzando la seguridad.
+* Las credenciales se pueden gestionar de forma segura mediante AWS Secrets Manager.
+* El RDS Proxy no es accesible públicamente, solo dentro de la VPC.
+
+5. Integración con AWS Lambda:
+* Es especialmente útil para Lambda, donde la rápida aparición y desaparición de funciones puede generar problemas con conexiones abiertas y timeouts. El RDS Proxy agrupa estas conexiones, evitando problemas de sobrecarga en la base de datos.
+En resumen, el RDS Proxy mejora la eficiencia de las conexiones, reduce los tiempos de failover, refuerza la seguridad y facilita la integración con servicios como AWS Lambda.

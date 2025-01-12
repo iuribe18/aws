@@ -1,0 +1,24 @@
+# To add an item to a table
+# The following put-item example adds a new item to the express-lane-sandbox table
+aws dynamodb put-item --table-name express-lane-sandbox --item '{"PrimaryKey": {"S": "client_id"}, "client_id": {"S": "Mediacom"}, "password": {"N": "123456789"}}'
+aws dynamodb put-item --table-name express-lane-sandbox --item '{"client_id": {"S": "Mediacom"}, "password": {"S": "123456789"}}'
+aws dynamodb --profile uribe put-item --table-name express-lane-sandbox --item '{"client_id": {"S": "Mediacom"}, "password": {"S": "123456789"}}' 
+aws dynamodb put-item --profile uribe --table-name express-lane-sandbox --item '{\"client_id\": {\"S\": \"Mediacom\"}, \"password\": {\"S\": \"123456789\"}}'
+
+# To read an item in a table
+# The following get-item example retrieves an item from the MusicCollection table. The table has a hash-and-range primary key (Artist and SongTitle), so you must specify both of these attributes. The command also requests information about the read capacity consumed by the operation.
+# aws dynamodb get-item \
+#    --table-name MusicCollection \
+#    --key file://key.json \
+#    --return-consumed-capacity TOTAL
+aws dynamodb --profile uribe get-item --table-name express-lane-sandbox --item '{"client_id": {"S": "Mediacom"}, "password": {"S": "123456789"}}'
+
+# The BatchWriteItem operation puts or deletes multiple items in one or more tables
+$ aws dynamodb batch-write-item --request-items file://items.json --profile uribe
+{
+    "UnprocessedItems": {}
+}
+
+# Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table
+# aws dynamodb describe-table --table-name <value>
+aws dynamodb describe-table --table-name tacdev-settings --profile uribe

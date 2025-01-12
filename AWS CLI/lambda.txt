@@ -1,0 +1,100 @@
+# Returns a list of Lambda functions, with the version-specific configuration of each. Lambda returns up to 50 functions per call.
+$ aws lambda list-functions --profile uribe --region us-west-2
+
+# Filtrar el nómbre de la función
+$ aws lambda list-functions --profile uribe --region us-west-2 --query 'Functions[].FunctionName' --output text
+
+# Filtrar el nómbre de la función
+$ aws lambda list-functions --profile uribe --region us-west-2 --query 'Functions[].FunctionName' --output json
+output:
+[
+    "nielsen-integration-sandbox",
+    "expresslane-sandbox"
+]
+
+# Estado de la Lambda
+aws lambda get-function-configuration --function-name expresslane-sandbox --query '{State: State, LastUpdateStatus: LastUpdateStatus, LastUpdateStatusReason: LastUpdateStatusReason}' --output json --profile uribe --region us-west-2
+
+
+$ aws lambda get-policy --function-name expresslane-sandbox --profile uribe --region us-west-2
+aws lambda update-function-configuration --function-name expresslane-sandbox --handler lane.src.lambda_express_lane.lambda_handler --profile uribe --region us-west-2
+aws lambda get-function-configuration --function-name expresslane-sandbox --profile uribe --region us-west-2
+aws lambda update-function-configuration --function-name expresslane-sandbox --handler lane.src.lambda_express_lane.lambda_handler
+
+$ aws lambda list-functions
+{
+    "Functions": [
+        {
+            "FunctionName": "test",
+            "FunctionArn": "arn:aws:lambda:us-east-1:735948513526:function:test",
+            "Runtime": "python3.12",
+            "Role": "arn:aws:iam::735948513526:role/service-role/test-role-c2l0cnhz",
+            "Handler": "lambda_function.lambda_handler",
+            "CodeSize": 299,
+            "Description": "",
+            "Timeout": 3,
+            "MemorySize": 128,
+            "LastModified": "2024-09-20T20:43:12.130+0000",
+            "CodeSha256": "HAPq9EReJVEC5gLavtc/gyd5vZtd9eiUGF932t0jBxY=",
+            "Version": "$LATEST",
+            "TracingConfig": {
+                "Mode": "PassThrough"
+            },
+            "RevisionId": "84121b82-b72d-4828-8bab-0912ebdb2457",
+            "PackageType": "Zip",
+            "Architectures": [
+                "x86_64"
+            ],
+            "EphemeralStorage": {
+                "Size": 512
+            },
+            "SnapStart": {
+                "ApplyOn": "None",
+                "OptimizationStatus": "Off"
+            }
+        }
+    ]
+}
+
+
+
+# Updates a Lambda function's code.
+$ aws lambda update-function-code --function-name test --zip-file fileb://lambda_function.zip
+{
+    "FunctionName": "test",
+    "FunctionArn": "arn:aws:lambda:us-east-1:735948513526:function:test",
+    "Runtime": "python3.12",
+    "Role": "arn:aws:iam::735948513526:role/service-role/test-role-c2l0cnhz",
+    "Handler": "lambda_function.lambda_handler",
+    "CodeSize": 308,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2024-09-20T20:48:25.000+0000",
+    "CodeSha256": "htQiL5WD9vKHlNKo/7yOTsfrldHkVXBsBbvvk4Uj184=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "1e5990d6-7d8d-4666-a245-aedf4b1ef5e9",
+    "State": "Active",
+    "LastUpdateStatus": "InProgress",
+    "LastUpdateStatusReason": "The function is being created.",
+    "LastUpdateStatusReasonCode": "Creating",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ],
+    "EphemeralStorage": {
+        "Size": 512
+    },
+    "SnapStart": {
+        "ApplyOn": "None",
+        "OptimizationStatus": "Off"
+    },
+    "RuntimeVersionConfig": {
+        "RuntimeVersionArn": "arn:aws:lambda:us-east-1::runtime:acd6500d0e3f6a085fb07933e3472ed6e58360d19ec5dd91bc7c7e8ad119de42"
+    }
+}
+
+$ aws lambda get-function --function-name test

@@ -1,0 +1,127 @@
+ELB + ASG:
+Scalability is about adapting your system to handle an increased load. It has two types:
+
+* Vertical Scalability (Scaling Up): This involves increasing the capacity of a single instance (upgrading a smaller EC2 instance to a larger one). 
+Example: Upgrading a junior phone operator who handles fewer calls to a senior operator who handles more.
+Common for non-distributed systems, like databases.
+
+* Horizontal Scalability (Scaling Out): This involves increasing the number of instances to handle more load. 
+Example: Adding more operators to a call center to handle more calls.
+Common for distributed systems like web applications. Cloud platforms like AWS make it easy to add instances.
+
+* High Availability (HA): Ensures your application/system remains operational even if part of it fails, usually by running it in multiple locations (availability zones). 
+Example: Distributing phone operators across different buildings so if one building loses internet, the other can still function. 
+HA often works with horizontal scaling, though it can also be passive (like RDS Multi-AZ) or active.
+
+Practical Examples with AWS:
+- Vertical Scaling: Increase the instance size for more power (e.g., t2.micro to t2.large).
+- Horizontal Scaling: Add more instances (scaling out) or remove instances (scaling in) using features like auto-scaling groups and load balancers.
+- High Availability: Running the same application across multiple availability zones to ensure redundancy.
+The lecture emphasizes understanding these concepts for exam preparation and uses a call center analogy to make the ideas relatable.
+
+Load Balancing
+* Load Balancer: Acts as a server or group of servers that distribute incoming traffic to multiple backend instances or servers. For example, an elastic load balancer (ELB) can distribute traffic among several EC2 instances.
+
+* How It Works: Users connect to a load balancer, which forwards traffic to different backend instances, ensuring traffic distribution and balanced load. Users only interact with the load balancer as their single access point, without knowing which backend instances handle their requests.
+
+* Benefits of Load Balancing:
+- Distributes load across multiple instances, providing a single access point.
+- Handles downstream failures with health checks, which determine if instances are healthy and can receive traffic.
+- Supports SSL termination, session stickiness (with cookies), and high availability across zones.
+- Separates public from private traffic in cloud environments.
+- Managed by AWS, ensuring maintenance, upgrades, and high availability, making it cost-effective compared to self-managed solutions.
+
+AWS Load Balancers:
+- Classic Load Balancer (CLB): Older generation, supports HTTP, HTTPS, TCP, SSL. AWS discourages its use, showing it as deprecated.
+- Application Load Balancer (ALB): Introduced in 2016, supports HTTP, HTTPS, and WebSocket.
+- Network Load Balancer (NLB): Introduced in 2017, supports TCP, TLS, and UDP.
+- Gateway Load Balancer (GWLB): Introduced in 2020, operates at the network layer and supports IP protocol.
+
+Security:
+- Load balancers accept HTTP/HTTPS traffic from anywhere, controlled by security group rules (e.g., allowing traffic on ports 80/443 from any source).
+- EC2 instances should only accept traffic from the load balancer's security group, enhancing security by restricting access to traffic originating from the load balancer.
+
+ALB
+Application Load Balancers (ALBs) operate at Layer 7 (HTTP) and are designed for routing traffic to multiple HTTP applications on EC2 instances or containers using target groups. 
+A target group is a logical grouping of instances, ECS tasks, Lambda functions, or IP addresses.
+Key features include routing based on URL paths, hostnames, query strings, and headers. ALBs support HTTP/2, WebSockets, automatic redirection (HTTP to HTTPS), and target groups like EC2 instances, ECS tasks, Lambda functions, or IP addresses.
+Compared to classic load balancers, ALBs enable routing multiple applications through one load balancer, reducing the need for multiple load balancers. 
+ALBs use rules to intelligently route traffic based on parameters, making them ideal for microservices architectures. They support health checks at the target group level and provide client IP information through headers like X-Forwarded-For, ensuring efficient communication with backend services.
+
+NLB
+The Network Load Balancer (NLB) operates at Layer 4, handling TCP and UDP traffic, unlike the Layer 7 Application Load Balancer focused on HTTP. 
+NLBs offer extremely high performance, managing millions of requests per second with ultra-low latency. They provide static IP addresses per availability zone, with the option to assign Elastic IPs, making them suitable for applications requiring consistent IP addresses.
+NLBs use target groups to route traffic, which can consist of EC2 instances or private IP addresses (from on-premise servers). NLBs can front Application Load Balancers (ALBs), combining high performance and static IPs from NLBs with ALB's advanced routing rules for HTTP traffic. 
+Health checks in NLB target groups support TCP, HTTP, and HTTPS protocols, ensuring backend service availability. Note that NLBs are not included in the AWS free tier.
+
+GLB
+The Gateway Load Balancer (GLB) is used to deploy, scale, and manage fleets of third-party network appliances like firewalls, intrusion detection/prevention systems (IDPs), or deep packet inspection systems in AWS. Its primary function is to ensure that all network traffic passes through these appliances before reaching an application, making inspection, modification, or security enforcement at the network level seamless and straightforward.
+The GLB operates at Layer 3 (network layer) and has two main roles: acting as a transparent network gateway (with a single entry/exit point for VPC traffic) and a load balancer that distributes traffic across a target group of virtual appliances. Target groups can consist of EC2 instances (registered by instance ID) or private IP addresses (including on-premises appliances).
+Key features include compatibility with the GENEVE protocol on port 6081 and simplified routing updates for traffic inspection, making it powerful for analyzing and controlling network traffic before application delivery. This capability enables advanced security and traffic management, transparently integrated into the network flow.
+
+
+**Sticky sessions, or session affinity**, ensure that multiple requests from the same client are consistently routed to the same backend instance when using an Elastic Load Balancer (ALB, CLB, or NLB). 
+This helps maintain session data, like user logins, by attaching a cookie to the client’s requests. 
+Stickiness can be managed using two types of cookies:
+1. Application-based Cookie: Created by the application itself, it can include custom attributes for each target group, with unique names (excluding reserved AWS names such as AWSALB, AWSALBAPP, AWSALBTG (reserved for use by the ELB)).
+2. Duration-based Cookie: Generated by the load balancer, it has a specified expiration time and keeps requests sticky for a set duration.
+Enabling stickiness may lead to load imbalance across instances if certain users remain highly connected to a specific instance. 
+Stickiness configuration occurs at the target group level, where attributes like the duration can be adjusted. While sticky sessions ensure consistent routing for client requests, they can be disabled to return to default load balancing behavior.
+
+**Cross-zone load balancing**
+Cross-zone load balancing helps distribute traffic evenly across all registered EC2 instances, regardless of their availability zone (AZ). When enabled, it ensures that requests sent to a load balancer are evenly distributed among all instances across all AZs.
+
+Example with Cross-Zone Balancing:
+* When a client sends 50% of traffic to each load balancer in two AZs, each load balancer redistributes that traffic across all 10 EC2 instances, giving each 10% of the total traffic.
+
+Example without Cross-Zone Balancing:
+* The traffic remains within each AZ. If a client sends 50% of traffic to each AZ, the load balancer will only distribute traffic among the instances in its own AZ. This can lead to an imbalance if the number of instances per AZ varies.
+
+Load Balancer Types and Cross-Zone Balancing Defaults:
+* Application Load Balancer (ALB): Cross-zone load balancing is enabled by default and incurs no inter-AZ data charges.
+* Network Load Balancer (NLB) and Gateway Load Balancer: Cross-zone load balancing is disabled by default. Enabling it can incur data transfer costs between AZs.
+* Classic Load Balancer: Cross-zone balancing is off by default. Enabling it does not incur data transfer charges, but the classic load balancer is being deprecated.
+You can enable or disable cross-zone load balancing through the attributes settings of each load balancer or target group, allowing flexibility depending on your traffic distribution and cost considerations.
+
+
+**ELB - SSL certificates**
+Overview of SSL and TLS:
+* SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are used to encrypt data in transit between a client and a server to ensure secure communication.
+* TLS is the modern version, but people often still refer to it as SSL.
+* Public SSL certificates are issued by Certificate Authorities (CAs) such as Comodo, Symantec, and Letsencrypt.
+
+Load Balancer and SSL/TLS Integration:
+* SSL certificates are used to encrypt connections between clients and load balancers, ensuring secure communication over HTTPS.
+* Load balancers handle SSL termination, decrypting data before passing it to backend instances, typically over a private network (HTTP).
+* AWS Certificate Manager (ACM) helps manage SSL/TLS certificates, including uploading custom certificates.
+
+Server Name Indication (SNI):
+* SNI allows multiple SSL certificates on one web server, enabling it to serve multiple websites.
+* When clients connect, they specify the hostname, allowing the server to select the appropriate SSL certificate.
+* SNI is supported by newer generation load balancers like Application Load Balancer (ALB) and Network Load Balancer (NLB), but not by the Classic Load Balancer (CLB).
+
+Multiple Certificates and Load Balancers:
+* ALBs and NLBs support multiple listeners and multiple SSL certificates through SNI, making it easier to handle multiple domains.
+* Classic Load Balancers can only support one SSL certificate, requiring multiple load balancers for multiple hostnames.
+This integration ensures secure, flexible communication for various use cases using AWS load balancers.
+
+**ASG**
+An Auto Scaling Group (ASG) in AWS automatically adjusts the number of EC2 instances to accommodate changes in load for applications or websites. 
+When traffic increases, the ASG scales out (adds instances), and when traffic decreases, it scales in (removes instances), ensuring optimal resource use. Users can set minimum and maximum capacity parameters to control the number of instances at any given time.
+Pairing an ASG with a load balancer (like an Elastic Load Balancer, or ELB) distributes traffic among the instances and monitors their health. If an instance is deemed unhealthy, it is terminated and replaced automatically by the ASG. ASGs are cost-effective as users only pay for the underlying resources.
+To create an ASG, you need a launch template that specifies how EC2 instances should be configured, including AMI, instance type, EBS volumes, security groups, network settings, and more. Previously, launch configurations were used but are now deprecated.
+ASGs can use CloudWatch alarms to automatically trigger scaling actions based on metrics such as average CPU utilization. If a metric threshold is breached, the ASG scales out by adding instances or scales in by removing instances. This automation makes ASGs responsive to changing load conditions, enhancing resource efficiency and availability.
+
+Auto Scaling Groups (ASGs) in AWS support several types of scaling policies to manage changes in load:
+1. Dynamic Scaling:
+* Target Tracking Scaling: Automatically adjusts the number of EC2 instances to maintain a specified target metric value (e.g., keeping CPU utilization at 40%).
+* Simple/Step Scaling: Uses CloudWatch alarms to add or remove capacity when certain thresholds are met, based on predefined steps.
+
+2. Scheduled Scaling: Predetermines scaling actions based on known usage patterns, such as increasing capacity at a specific time.
+
+3. Predictive Scaling: Analyzes historical data to forecast future load and schedules scaling accordingly, ideal for cyclic patterns.
+Common scaling metrics include CPU utilization, request count per target, and network input/output, tailored to the application's needs. Custom metrics pushed to CloudWatch can also drive scaling actions.
+
+ASGs include a scaling cooldown period (defaulting to 5 minutes) after a scaling event to allow metrics to stabilize before any further adjustments. Using pre-configured AMIs can reduce the startup time for new instances, enhancing responsiveness and potentially shortening the cooldown.
+
+Enabling detailed monitoring for frequent metric updates is recommended for more responsive scaling.

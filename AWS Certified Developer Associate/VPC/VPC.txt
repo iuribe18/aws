@@ -1,0 +1,91 @@
+Summary of VPC and Subnet Concepts
+1. VPC (Virtual Private Cloud):
+* A private network within AWS that allows resource deployment.
+* It is regional, meaning each AWS region has a separate VPC.
+* Defined by a range of IP addresses (CIDR range).
+
+2. Subnets:
+* Subnets partition the VPC network and are tied to specific Availability Zones (AZ).
+* Types:
+    - Public Subnet: Accessible from the internet via an Internet Gateway.
+    - Private Subnet: Not directly accessible from the internet for enhanced security.
+
+3. Routing and Connectivity:
+* Route Tables: Define network traffic flow between subnets and to the internet.
+* Internet Gateway: Enables public subnets to connect to the internet.
+* NAT Gateway/Instance:
+    - Used for private subnets to access the internet without being directly accessible.
+    - NAT Gateways are managed by AWS, while NAT Instances require self-management.
+
+4. Infrastructure Overview:
+* A typical setup includes:
+    - Public and private subnets in each AZ.
+    - Internet Gateway for public subnets.
+    - NAT Gateway/Instance for private subnets to access the internet indirectly.
+
+5. Default VPC:
+* Created automatically by AWS in each region.
+* Contains only public subnets.
+
+6. Use Cases:
+* Public subnets host resources needing internet access (e.g., web servers).
+* Private subnets host secure resources (e.g., databases) while maintaining limited internet access for updates via NAT.
+
+
+1. Network ACLs (NACLs):
+* Purpose: A subnet-level firewall controlling inbound and outbound traffic.
+* Rules: Supports explicit allow and deny rules based on IP addresses.
+* Stateless: Inbound and outbound rules are evaluated separately.
+* Default Behavior: Default NACL in AWS allows all traffic in and out.
+
+2. Security Groups:
+* Purpose: Instance-level firewall controlling traffic to and from Elastic Network Interfaces (ENI) or EC2 instances.
+* Rules: Supports only allow rules, based on IP addresses or other security groups.
+* Stateful: Return traffic is automatically allowed.
+
+3. Comparison:
+* NACLs are applied at the subnet level, while security groups are attached to instances or ENIs.
+* NACLs can allow or deny traffic, whereas security groups only allow traffic.
+* NACLs are stateless, while security groups are stateful.
+
+4. VPC Flow Logs:
+* Purpose: Logs all IP traffic in a VPC, subnet, or ENI.
+* Use Cases: Monitoring and troubleshooting connectivity issues (e.g., internet access failures, communication between subnets).
+* Captured Traffic: Includes both allowed and denied traffic.
+* Integration: Flow logs can be sent to Amazon S3, CloudWatch Logs, or Kinesis Data Firehose for analysis.
+
+5. Key Applications:
+* Use NACLs for broad subnet-level traffic control.
+* Use security groups for instance-specific traffic management.
+* Leverage VPC Flow Logs to diagnose and monitor network issues.
+
+1. VPC Peering:
+* Purpose: Connect two VPCs (in the same or different accounts/regions) as if they were part of the same network.
+* Key Points:
+    - Requires unique, non-overlapping IP ranges for the VPCs.
+    - Not transitive: Direct peering connections must be established for each pair of VPCs.
+    - As the number of VPCs increases, more peering connections are required.
+
+2. VPC Endpoints:
+* Purpose: Provide private connectivity from VPCs to AWS services without using the public internet.
+* Types:
+    - Gateway Endpoint: For services like Amazon S3 and DynamoDB.
+    - Interface Endpoint: For other AWS services, providing private access through Elastic Network Interfaces (ENIs).
+* Benefits:
+    - Enhances security by avoiding the public internet.
+    - Reduces latency for accessing AWS services.
+* Use Cases: Private subnets accessing AWS services like S3, DynamoDB, or CloudWatch.
+
+3. On-Premises Connectivity to VPC:
+* Site-to-Site VPN:
+    - Establishes an encrypted connection over the public internet between an on-premises data center and a VPC.
+    - Quick and easy to set up, suitable for most use cases.
+* Direct Connect:
+    - A private, physical connection between an on-premises data center and a VPC.
+    - Provides secure, fast, and reliable connectivity without using the public internet.
+    - Takes longer to set up (approximately one month) due to infrastructure requirements.
+
+Key Takeaways:
+* VPC Peering: Use for connecting VPCs privately, ensuring non-overlapping IP ranges, and setting up direct connections for each VPC pair.
+* VPC Endpoints: Use to privately access AWS services from within a VPC, avoiding the public internet.
+* Site-to-Site VPN vs. Direct Connect: Choose VPN for faster setup and encrypted internet-based connectivity, or Direct Connect for secure, high-performance private connectivity.

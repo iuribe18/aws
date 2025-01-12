@@ -1,0 +1,18 @@
+AWS Hands-On: Amazon EventBridge (S3 / Lambda)
+https://www.youtube.com/watch?v=fOYFCXv9bKI
+
+Requirements
+1. Bucket s3 (backup-db-jenkins)
+1A: Enable the EventBridge Notification (Amazon EventBridge ON)
+2. Lambda (MyTargetFunction)
+3. EventBridge Rule (MyS3ToLambdaRule)
+{
+    "detail-type": ["Object Created", "Object Deleted"],
+    "source": ["aws.s3"],
+    "detail": {
+        "bucket": {
+            "name": ["your-bucket-name"]
+        }
+    }
+}
+4. 

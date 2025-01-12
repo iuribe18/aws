@@ -1,0 +1,108 @@
+1. A company hosts multiple public web applications in the AWS Cloud. The company wants to give its employees the ability to work from home. Employees should have access to the company's applications. The employees also need access to a variety of Microsoft Windows desktop applications from the home computers that they regularly use for work.
+Which solution will meet these requirements with the LEAST operational overhead?
+
+A. Launch Amazon EC2 instances that run windows with the required desktop software for each user. Require users to access the desktops from home by using remote desktop protocol (RDP).
+B. Implement AWS outposts to host Amazon EC2 instances that run Windows with the required desktop software for each user. Require users to access the desktops from home by using remote desktop protocol (RDP).
+C. Deploy Windows Docker containers with an image for each user to an Amazon elastic container service (Amazon ECS) cluster. Stream the desktops to each user's browser by using Amazon AppStream 2.0.
+D.Implement Amazon workspaces to host a Windows desktop for each user. Install the required desktop software. Require users to access the desktop from the Amazon workspaces client on their home devices.
+
+*** D. Implement Amazon Workspaces to host a Windows desktop for each user. Install the required desktop software. Require users to access the desktop from the Amazon Workspaces client on their home devices.
+
+Razón por la que es la mejor opción:
+1. Menor overhead operativo:
+* Amazon Workspaces proporciona escritorios virtuales como un servicio administrado, reduciendo la carga operativa de aprovisionar, mantener y escalar las infraestructuras de escritorios remotos.
+
+2. Acceso seguro y flexible desde casa:
+* Los empleados pueden conectarse a los escritorios de Windows desde sus dispositivos personales mediante el cliente de Amazon Workspaces, con autenticación segura. Esto permite un acceso confiable a las aplicaciones de escritorio.
+
+3. Administración simplificada:
+* Las actualizaciones y la gestión de los escritorios se centralizan, lo que facilita al equipo de TI administrar las configuraciones, licencias y requisitos de software.
+
+4. No requiere infraestructura adicional en las instalaciones:
+* A diferencia de AWS Outposts (opción B), que requiere hardware físico en las instalaciones, Amazon Workspaces opera completamente en la nube.
+
+5. Soporte de aplicaciones de Windows:
+* Workspaces puede instalar aplicaciones de Windows directamente, lo que satisface la necesidad de los usuarios de ejecutar software de escritorio.
+
+2. A retail company stores sales data for millions of products in a MySQL database that runs on Amazon EC2 instances. As the number of products increases, the company observes performance degradation in the database. 
+Because of poor demand forecasts, the company frequently runs out of products. To prevent lost sales that result from product shortages, the company wants to automate the creation of demand forecasts by using analytics. 
+The company is evaluating other AWS managed database options. The company has the following requirements:
+* Perform analytics on incoming data every minute.
+* Recognize consumer behavior trends such as daily page views, cart abandonment rate, and weekly orders based on aggregate, derivative, and correlation functions.
+* Efficiently store hundreds of terabytes of data, including current and historical data, to optimize performance.
+Which solution will meet these requirements with the LEAST operational overhead?
+
+A. Create multiple Amazon DynamoDB Standard tables to separate current and historical data.
+B. Create a single Amazon Timestream table for both current and historical data
+C. Create a single Amazon DocumentDB collection for both current and historical data.
+D. Create an Amazon Timestream table for current data and an Amazon DocumentDB collection for historical data
+
+*** B. Create a single Amazon Timestream table for both current and historical data.
+
+Razón por la que esta es la mejor opción:
+Diseño para datos temporales y analíticos:
+
+Amazon Timestream es un servicio administrado diseñado específicamente para almacenar y analizar grandes cantidades de datos temporales (time-series data). Esto lo hace ideal para datos que llegan continuamente, como los registros de ventas por minuto.
+Optimización para análisis en tiempo real:
+
+Timestream permite ejecutar análisis en tiempo real sobre datos actuales y manejar consultas complejas basadas en funciones de agregación, derivación y correlación, que son necesarias para identificar tendencias de comportamiento de los consumidores.
+Gestión de datos históricos y actuales:
+
+Timestream automáticamente clasifica los datos en almacenamiento "caliente" (datos recientes) y almacenamiento "frío" (datos históricos) según políticas configurables. Esto elimina la necesidad de separar los datos manualmente y optimiza el rendimiento y los costos.
+Escalabilidad y almacenamiento eficiente:
+
+Puede manejar cientos de terabytes de datos históricos sin problemas, lo que es ideal para las necesidades de la compañía.
+Menor overhead operativo:
+
+Como servicio completamente administrado, Amazon Timestream reduce significativamente la carga operativa al manejar tareas como el escalado, mantenimiento, backups, y optimización de consultas.
+
+3. A company's processing team has an AWS account with a production application. The application runs on Amazon EC2 instances behind a Network Load Balancer (NLB). The EC2 instances are hosted in private subnets in a virtual private cloud (VPC) in the eu-west-1 Region. The VPC was assigned the CIDR block of 10.0.0.0/16. The company's billing team recently created a new AWS account and deployed an application on EC2 instances that are hosted in private subnets in a VPC in the eu-central-1 Region. The new VPC is assigned the CIDR block of 10.0.0.0/16.
+The processing application needs to communicate securely with the billing application over a proprietary TCP port.
+What should a solutions architect do to meet this requirement with the LEAST operational effort?
+
+A. In the billing team's account create a new VPC and subnets in eu-central-1 that use the CIDR block of 192.168.0.0/16. Redeploy the application to the new subnets. Configure a new VPC peering connection between the two VPCs.
+B. In the processing team's account, add an additional CIDR block of 192.168.0.0/16 to the VPC in eu-west-1. Restart each of the EC2 instances so that they obtain a new IP address. Configure an inter-region VPC peering connection between the two VPCs.
+C. In the billing team's account, create a new VPC and subnets in eu-west-1 that use this CIDR block of 192.168.0.0/16. In the processing team's account, create a VPC endpoint service that is powered by AWS PrivateLink. Create an interface VPC endpoint in the new VPC. Configure and inter-region VPC peering connection in the billing team's account between the two VPCs.
+D. In each account, create a new VPC with the CIDR blocks of 192.168.0.0/16 and 172.16.0.0/16. Create inter-region VPC peering connections between the billing team's VPCs and the processing team's VPCs. Create gateway VPC endpoints to allow traffic to route between the VPCs.
+
+*** C. In the billing team's account, create a new VPC and subnets in eu-west-1 that use this CIDR block of 192.168.0.0/16. In the processing team's account, create a VPC endpoint service that is powered by AWS PrivateLink. Create an interface VPC endpoint in the new VPC. Configure and inter-region VPC peering connection in the billing team's account between the two VPCs.
+
+4. A company has a long-running analytics process that it runs on premises. The current infrastructure consists of a cluster of high-performance servers that are connected through a low-latency fiber network. The current infrastructure is due for a major hardware upgrade that will require a large budget increase. The company is considering migrating the analytics process to AWS. A solutions architect must recommend a solution to replicate the on-premises architecture on AWS.
+Which solution would meet these requirements MOST cost-effectively?
+
+A. Create an Amazon EC2 fleet in a cluster placement group with reserved instances.
+B. Create an Amazon EC2 fleet in a cluster placement group with spot instances.
+C. Create an Amazon EC2 fleet in a partition placement group with reserved instances.
+D. Create an Amazon EC2 fleet in a partition placement group with spot instances.
+
+*** A. Create an Amazon EC2 fleet in a cluster placement group with reserved instances.
+Resources
+Placement groups for your Amazon EC2 instances
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html
+
+5. A company uses multiple Amazon DynamoDB tables to host data for three different applications. A security administrator would like to provide application administrators with the ability to manage permissions for the tables that are associated with each administrator's specific application only. The application administrators are currently part of an IAM group called DynamoDBAdmins, which has permissions on all tables. The company will create additional administrators and tables for new applications in the future.
+Recently, one of the application administrators was able to create an IAM role that had permissions on tables not associated with the administrator's application. The security administrator must create a new solution that prevents application administrators from obtaining permissions on tables that are not associated with their applications.
+Which solution meets this requirement with the LEAST amount of ongoing administrative effort?
+A. Create a permission boundary policy with a statement for each administrator that provides access only to their specific tables. Attach the permission boundary to each user.
+B. Create IAM policies to deny access to specific table for each administrator. Attach the policies to the appropriate administrators.
+C. Create a permission boundary policy with a statement for each administrator that provides access only to their specific tables. Attach the permission boundary to the DynamoDBAdmins group.
+D. Create a resource-based policy that lists the appropriate administrator as the principal for each application. Apply the resource-based policy to the DynamoDB tables as needed.
+
+*** Respuesta: A
+A permissions boundary is an advanced feature that gives you the ability to use a managed policy to set the maximum permissions that an identity-based policy can grant to an IAM entity (user or role). 
+You can use a permissions boundary to limit the permissions that the application administrators can grant. The application administrators would not have the ability to create an IAM role with permissions on any tables except those for which they have permissions. 
+A single permissions boundary policy would require less administrative effort than multiple policies.
+
+Resources
+Permissions boundaries for IAM entities
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
+
+6. A company has deployed a trading application in several AWS Regions. The application uses third-party REST services that are also deployed on AWS in the same Regions as the trading application. 
+For security reasons, the application uses AWS PrivateLink VPC endpoints to connect to the third-party services. Recently, one of the third-party services began sending internal error responses. The error responses caused instability in the trading application in that Region. The result was a heavy financial loss for the company. The company wants a solution to failover to a secondary Region if a third-party service does not respond properly in one of the Regions.
+Which solution will meet these requirements?
+A. Stream logs from the trading application to Amazon CloudWatch. Create a CloudWatch alarm from the logs based on response time to determinate whether the third-party service is unresponsive. Configure Amazon 53 DNS with health checks to track the CloudWatch alarm status and to failover to the secondary Region.
+B. Create an Amazon CloudWatch Synthetics canary that uses a heartbeat monitor blueprint to reach the third-party application. Create a CloudWatch alarm on the canary based on the number of failed attempts each minute. Configure Amazon Route 53 DNS with health checks to track the alarm status and to failover to a secondary Region.
+C. Create an Amazon CloudWatch Synthetics canary that use an API canary blueprint to reach the third-party application. Create a CloudWatch alarm on the canary based on the number of failed attempts each minute. Create a CloudWatch alarm on the canary based on the number of failed attempts each minute. Configure Amazon Route 53 DNS with health checks to track the alarm status and to failover to a secondary Region.
+D. Activate VPC Flow Logs and configure the logs to publish to Amazon CloudWatch logs. Create a CloudWatch alarm on the CloudWatch logs based on rejected request from the VPC endpoint. Create a CloudWatch alarm on the canary based on the number of failed attempts each minute. Create a CloudWatch alarm on the canary based on the number of failed attempts each minute. Configure Amazon Route 53 DNS with health checks to track the alarm status and to failover to a secondary Region.
+
+*** Respuesta: C

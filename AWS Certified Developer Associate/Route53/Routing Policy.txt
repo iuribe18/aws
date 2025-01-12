@@ -1,0 +1,64 @@
+Routing Policies for Failover Using Route 53:
+The lesson explains setting up a failover routing policy in Amazon Route 53 for handling disaster recovery between two EC2 instances: a primary and a secondary instance. The setup ensures seamless redirection based on the health status of the primary instance.
+
+Key Steps:
+1. Primary and Secondary EC2 Instances:
+* The primary instance is associated with a mandatory health check.
+* If the health check deems the primary unhealthy, Route 53 automatically redirects traffic to the secondary instance.
+
+2. DNS Requests:
+* Clients automatically receive responses from the healthy resource.
+* Primary record serves requests if healthy; otherwise, the secondary takes over.
+
+3. Creating Failover Records:
+* In the hosted zone, create an A record for the primary instance, setting:
+    - Routing policy: Failover
+    - TTL: 60 seconds
+    - Type: Primary
+    - Associate it with a health check.
+* Add another A record for the secondary instance with:
+    - Routing policy: Failover
+    - Type: Secondary
+    - Optionally associate a health check.
+
+4. Triggering and Testing Failover:
+* Simulate a failure by making the primary instance unreachable (e.g., modifying security group rules).
+* Once the health check reports the primary as unhealthy, Route 53 automatically routes traffic to the secondary instance.
+
+5. Restoring the Primary:
+* Revert the changes (e.g., restore security group rules) to make the primary instance healthy again.
+* Route 53 redirects traffic back to the primary seamlessly.
+This approach ensures high availability and disaster recovery by leveraging Route 53’s failover capabilities.
+
+Geolocation Routing Policy Using Route 53:
+The lesson discusses setting up a Geolocation Routing Policy in Route 53, which routes traffic based on the user's physical location. This approach is different from latency-based routing and is useful for scenarios like website localization, content restriction, and load balancing.
+
+Key Points:
+1. Geolocation-Based Routing:
+* Traffic is routed based on the user's continent, country, or U.S. state.
+* The most precise match is prioritized.
+* A default record must be created for cases where no location match is found.
+
+2. Use Cases:
+* Localizing website content (e.g., users in Germany get a German version, users in France get a French version, etc.).
+* Restricting content distribution.
+* Balancing load geographically.
+
+3. Health Checks:
+* Geolocation records can be associated with health checks to ensure traffic is routed only to healthy resources.
+
+4. Practical Setup:
+* Create multiple records:
+    - Asia: Route traffic to an EC2 instance in ap-southeast-1.
+    - United States: Route traffic to an EC2 instance in us-east-1.
+    - Default: Route traffic to an EC2 instance in eu-central-1 for users outside specified regions.
+* Each record is defined with the geolocation policy, routing users based on their region or country.
+
+5. Testing the Policy:
+* Default Record: Tested by accessing the site from a region not specified (e.g., Mexico), which correctly routed traffic to the default instance.
+* Asia Record: Tested by connecting via a VPN to India, which routed traffic to the ap-southeast-1 instance.
+* U.S. Record: Tested by connecting via a VPN to the United States, which routed traffic to the us-east-1 instance.
+
+6. Troubleshooting:
+* If a timeout occurs, check security group inbound rules for HTTP access and update them as needed.
+This geolocation policy ensures targeted content delivery based on user location while maintaining a fallback default for unmatched locations.

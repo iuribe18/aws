@@ -1,0 +1,31 @@
+Amazon Route 53
+Amazon Route 53 is a highly available, scalable, and fully managed authoritative DNS service. It allows users to create and manage DNS records for their domains, offering control over routing traffic to specific resources, such as EC2 instances. Here's a breakdown:
+
+Key Features:
+1. Authoritative DNS: Users can update DNS records and fully control domain routing.
+2. Domain Registrar: Route 53 can register domains (e.g., example.com).
+3. DNS Records Management:
+* Records (e.g., A, AAAA, CNAME, NS) define how traffic is routed.
+* A record maps a hostname to an IPv4 address; AAAA maps to IPv6.
+* CNAME maps a hostname to another hostname (not for root domains).
+* NS specifies the authoritative name servers.
+* Records include details like TTL (time-to-live) and routing policies.
+
+4. Hosted Zones:
+* Public Hosted Zones: Serve public domains accessible via the internet.
+* Private Hosted Zones: Serve internal domains, accessible only within a Virtual Private Cloud (VPC).
+
+5. Health Checks: Monitor resource health for efficient routing.
+6. 100% Availability SLA: Guarantees high reliability for DNS queries.
+
+Pricing:
+* Hosted zones cost $0.50/month.
+* Domain registration starts at $12/year.
+
+Example Use Cases:
+* Public Hosted Zone: Maps example.com to a public IP for external clients.
+* Private Hosted Zone: Resolves private domain names (app.internal) to private IPs within a VPC.
+
+Why "Route 53"?
+The name references port 53, traditionally used for DNS services.
+By using Route 53, users can efficiently route traffic, manage both public and private domains, and ensure high availability and scalability for their applications.

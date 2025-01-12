@@ -1,0 +1,77 @@
+Amazon ElastiCache:
+Amazon ElastiCache es un servicio gestionado que soporta tecnologías de caché como Redis y Memcached, diseñadas para mejorar el rendimiento de las aplicaciones mediante el uso de bases de datos en memoria de alta velocidad y baja latencia. 
+Características principales:
+
+1. Beneficios de la Caché:
+* Aliviar la carga de bases de datos: Reduce el número de consultas directas a la base de datos almacenando resultados de consultas frecuentes.
+* Mejorar la latencia: Las aplicaciones pueden acceder rápidamente a datos almacenados en la caché, evitando consultas costosas a la base de datos.
+
+2. Uso y Arquitectura:
+* Cache Hit/Miss: Si los datos solicitados están en la caché (cache hit), se recuperan de inmediato. Si no (cache miss), los datos se obtienen de la base de datos y se almacenan en la caché para futuras solicitudes.
+* Estrategias de invalidación de caché: Son esenciales para garantizar que los datos almacenados sean actuales y consistentes.
+* Aplicaciones Stateless: ElastiCache permite almacenar sesiones de usuario, haciendo que las aplicaciones sean "sin estado" y facilitando el escalado horizontal.
+
+3.Gestión por AWS:
+AWS se encarga del mantenimiento, configuración, monitoreo, recuperación ante fallos y copias de seguridad.
+
+4. Redis vs. Memcached:
+Redis:
+* Soporta alta disponibilidad con réplicas y failover automático.
+* Permite durabilidad de datos con persistencia AOF y funciones de respaldo/restauración.
+* Ofrece características avanzadas como sets y sets ordenados, útiles para aplicaciones como rankings o tableros de líderes.
+
+Memcached:
+* Utiliza partición de datos (sharding) con múltiples nodos.
+* No ofrece alta disponibilidad ni replicación en su versión autogestionada.
+* Incluye arquitectura multihilo para mejor rendimiento.
+
+5. Consideraciones:
+Implementar ElastiCache requiere cambios en el código de la aplicación para integrar consultas con la caché y definir estrategias de uso.
+En resumen, ElastiCache es ideal para reducir la carga de trabajo de bases de datos intensivas en lectura, mejorar la latencia y habilitar aplicaciones sin estado. 
+Redis es más avanzado en términos de disponibilidad y características, mientras que Memcached es más simple y está orientado al particionamiento de datos.
+
+Estrategias de caché y Amazon ElastiCache:
+¿Qué es la caché?
+* Almacena datos en memoria para mejorar la velocidad y reducir la carga en la base de datos.
+* Ideal para datos que cambian lentamente y son frecuentemente consultados.
+* Requiere estrategias para evitar datos obsoletos y garantizar consistencia eventual.
+
+Estrategias de Caché
+1. Lazy Loading (Cache-Aside o Lazy Population):
+Funcionamiento:
+* La aplicación consulta primero la caché.
+* Si ocurre un cache miss (dato no encontrado), consulta la base de datos, obtiene el dato y lo guarda en la caché para futuras consultas (cache hit).
+Ventajas:
+* Solo se almacena en caché lo que se solicita.
+* Fallas en la caché no son críticas; solo aumentan la latencia.
+Desventajas:
+* Riesgo de datos obsoletos en la caché si cambian en la base de datos.
+* Penalización en latencia debido a múltiples llamadas (caché, base de datos, y actualización de la caché).
+
+2. Write-Through:
+Funcionamiento:
+* Cada vez que se escribe o actualiza un dato en la base de datos, también se actualiza la caché.
+Ventajas:
+* La caché siempre está actualizada, evitando datos obsoletos.
+Desventajas:
+* Penalización en las escrituras debido a llamadas adicionales a la caché.
+* Puede contener datos que nunca se consulten, desperdiciando espacio.
+Combinación con Lazy Loading:
+* Puede combinarse para optimizar tanto lecturas como escrituras.
+
+3. TTL (Time-to-Live) y Evicción de Caché:
+* TTL: Configura un tiempo límite para que un dato permanezca en caché, después del cual se elimina.
+* Evicción: Los datos menos usados (LRU: Least Recently Used) son eliminados cuando la memoria de la caché está llena.
+Ventajas:
+* Mantiene la caché actualizada y evita saturaciones.
+* Útil para datos temporales como tablas de líderes o flujos de actividad.
+Consideraciones:
+* Ajustar el tamaño de la caché si la memoria está constantemente llena.
+
+Consideraciones Generales:
+* Lazy Loading: Es la estrategia más simple y recomendada para mejorar el rendimiento de lecturas.
+* Write-Through: Se utiliza para garantizar datos consistentes, pero no suele ser la primera prioridad.
+* TTL: Es una buena práctica para datos dinámicos, excepto con Write-Through.
+* Cachear solo datos adecuados (e.g., perfiles de usuario, blogs; evitar datos sensibles como precios o saldos bancarios).
+
+Conclusión: El diseño de caché es complejo, pero estrategias como Lazy Loading, Write-Through y TTL ayudan a optimizar aplicaciones. La selección y combinación adecuada depende del caso de uso y la prioridad entre consistencia, rendimiento y simplicidad.

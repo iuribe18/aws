@@ -1,0 +1,19 @@
+{
+    "Id": "Policy1724117932615",
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Stmt1724117927397",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::static-website-nodejs/*",
+        "Principal": {
+          "AWS": [
+            "cloudfront.amazonaws.com"
+          ]
+        }
+      }
+    ]
+  } 

@@ -1,0 +1,9 @@
+1. Configure sticky sessions for your Classic Load Balancer
+https://docs.aws.amazon.com/es_es/elasticloadbalancing/latest/classic/elb-sticky-sessions.html
+
+2. Configure cross-zone load balancing for your Classic Load Balancer
+https://docs.aws.amazon.com/es_es/elasticloadbalancing/latest/classic/enable-disable-crosszone-lb.html
+
+
+3. Caching Best Practices
+https://aws.amazon.com/es/caching/best-practices/

@@ -1,0 +1,32 @@
+RDS stands for Relational Database Service.
+So what types of database engine are managed by AWS?
+PostgreSQL, MySQL, MariaDB, Oracle, Microsoft SQL Server, IBM DB2, and Aurora.
+Well, RDS is a managed service and as such, AWS provides a lot of services on top of just giving us a database.
+For example, the provisioning of the database is fully automated, and so is the underlying operating system patching.
+There is continuous backups being made and you are able to restore to a specific timestamp. It's called Point in Time Restore.
+You can also have monitoring dashboards to view the performance of your database.
+You can have read replicas, and we have a dedicated lecture on read replicas in this course.
+To improve read performance, you can set up a multi AZ, and so we do have also sections on multi AZ that will be helpful for disaster recovery.
+You have maintenance windows for the upgrades, and you have scaling public capabilities, both vertical, by increasing the instance-type type, and horizontal by adding read replicas.
+Filing the storage is backed by EBS, so this is something we already know, but the only thing we do not have is we cannot SSH into the instances, the RDS instances.
+
+RDS Read Replicas for read scalability
+Read Replicas:
+* Purpose: Scale read operations from a primary RDS database.
+* Usage: Create up to 15 replicas within the same AZ, across AZs, or regions.
+* Functionality: Asynchronous replication leads to eventual consistency, meaning data read from replicas might not reflect the latest changes instantly.
+* Benefits: Ideal for offloading read-heavy tasks (e.g., analytics and reporting) without affecting the main database's performance.
+* Cost Considerations: Cross-region replication incurs fees, but same-region replication across AZs is free.
+* Limitations: Only supports SELECT operations (no data modification commands).
+* Promotability: Read replicas can be promoted to become a standalone database.
+
+Multi-AZ Deployments:
+* Purpose: Primarily used for high availability and disaster recovery.
+* Functionality: Synchronous replication between a primary ("Master") and a standby instance ensures data consistency.
+* Benefits: Automatic failover capability with no manual intervention needed if the primary instance fails, providing seamless continuity.
+* Limitations: Not used for scaling reads; standby cannot serve traffic.
+
+Key Points for the Exam:
+* Differences between Read Replicas (for read scaling) and Multi-AZ (for availability and failover).
+* Read Replicas can also be configured for Multi-AZ for additional disaster recovery.
+* Transitioning from Single AZ to Multi-AZ is a zero-downtime process, simply requiring modification of settings.

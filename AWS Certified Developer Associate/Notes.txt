@@ -1,0 +1,14 @@
+IAM Roles for Services
+* Some AWS service will need to perform actions on your behalf.
+* To do so, we will assign permissions to AWS services with IAM roles
+So these IAM role will be just like a user, but they are intended to be used not by physical people, but instead they will be used by AWS services.
+
+Common Roles:
+EC2 instances Roles
+Lambda Function Roles
+Roles for CloudFormation
+ECS Task Roles y EKS Roles
+
+IAM Security Tools
+IAM credentials Report ()
+IAM Access Advisor (user-level)

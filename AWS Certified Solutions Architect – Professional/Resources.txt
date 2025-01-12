@@ -1,0 +1,5 @@
+AWS Certified Solutions Architect - Professional
+https://aws.amazon.com/es/certification/certified-solutions-architect-professional/
+
+
+https://explore.skillbuilder.aws/learn
